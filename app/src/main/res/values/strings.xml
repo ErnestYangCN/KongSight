@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KongSight</string>
+
+    <!-- Error message -->
+    <string name="user_exists">Username already exists</string>
+    <string name="user_no_exists">Username does not exist</string>
+    <string name="wrong_passwd">Wrong Password!</string>
+</resources>
