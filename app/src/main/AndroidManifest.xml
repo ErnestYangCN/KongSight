@@ -26,21 +26,22 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- 页面4：景点信息页 -->
-        <activity
-            android:name=".AttractionDetailActivity"
-            android:label="@string/attraction_detail"
-            android:exported="false" />
+<!--        &lt;!&ndash; 页面4：景点信息页 &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".AttractionDetailActivity"-->
+<!--            android:label="@string/attraction_detail"-->
+<!--            android:exported="false" />-->
 
-        <!-- 页面5：周边信息页 -->
-        <activity
-            android:name=".NearbyPoiActivity"
-            android:label="@string/nearby_info"
-            android:exported="false" />
+<!--        &lt;!&ndash; 页面5：周边信息页 &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".NearbyPoiActivity"-->
+<!--            android:label="@string/nearby_info"-->
+<!--            android:exported="false" />-->
 
     </application>
 
