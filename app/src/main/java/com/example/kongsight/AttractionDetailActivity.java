@@ -31,7 +31,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         // 首先确保测试数据存在
         Log.d("TestDB", "正在初始化测试数据...");
-        TestDB.testDB(this);
+        //TestDB.testDB(this);
         Log.d("TestDB", "测试数据初始化完成");
 
         // 初始化Repository
@@ -67,17 +67,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 测试按钮 - 重新加载测试数据
-        Button testButton = findViewById(R.id.test_button);
-        if (testButton != null) {
-            testButton.setOnClickListener(v -> {
-                // 重新运行测试数据
-                TestDB.testDB(AttractionDetailActivity.this);
-                // 重新加载景点数据
-                loadAttractionDetail();
-                Toast.makeText(this, "测试数据已重新初始化", Toast.LENGTH_SHORT).show();
-            });
-        }
     }
 
     private void loadAttractionDetail() {

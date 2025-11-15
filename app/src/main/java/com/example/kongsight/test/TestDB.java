@@ -114,7 +114,7 @@ public class TestDB {
 
             repo.createContent(
                     "Great Wall of China",
-                    "https://picsum.photos/300/200?random=1",
+                    "https://picsum.photos/300/200?random=2",
                     "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection against various nomadic groups from the Eurasian Steppe.",
                     116.570000,
                     40.430000,
@@ -124,7 +124,7 @@ public class TestDB {
 
             repo.createContent(
                     "Statue of Liberty",
-                    "https://picsum.photos/300/200?random=1",
+                    "https://picsum.photos/300/200?random=3",
                     "The Statue of Liberty is a colossal neoclassical sculpture on Liberty Island in New York Harbor in New York City, in the United States. The copper statue, a gift from the people of France, was designed by French sculptor Frédéric Auguste Bartholdi.",
                     -74.044500,
                     40.689200,
