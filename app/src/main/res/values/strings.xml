@@ -1,9 +1,30 @@
 <resources>
     <string name="app_name">KongSight</string>
+    <!-- 页面5相关 -->
+    <string name="nearby_info">Surrounding Information</string>
+    <string name="category">Category:</string>
+    <string name="category_food">Food</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="back">Back</string>
+    <string name="no_surrounding_info">No surrounding information</string>
+    <string name="no_category_info">No %s information</string>
+    <string name="attraction_surrounding">%s - Surrounding Info</string>
 
+    <!-- 通用 -->
+    <string name="error_attraction_info">Attraction information error</string>
+    <string name="other">Other</string>
     <!-- Error message -->
     <string name="user_exists">Username already exists</string>
     <string name="user_no_exists">Username does not exist</string>
     <string name="wrong_passwd">Wrong Password!</string>
-    <string name="edit_profile">Edit Profile</string>
+
+    <string name="attraction_detail">Attraction Details</string>
+    <string name="login">Login</string>
+    <string name="profile">Profile</string>
+    <string name="user_management">User Management</string>
+    <string name="content_management">Content Management</string>
+    <string name="clicked_item">Clicked: %s</string>
+    <string name="address_prefix">Address:</string>
+    <string name="nearby_places">Nearby Places</string>
 </resources>

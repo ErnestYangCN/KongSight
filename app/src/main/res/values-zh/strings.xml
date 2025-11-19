@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">港识</string>
+
+    <!-- 页面5相关 -->
+    <string name="nearby_info">周边信息</string>
+    <string name="category">分类：</string>
+    <string name="category_food">美食</string>
+    <string name="category_transport">交通</string>
+    <string name="category_entertainment">娱乐</string>
+    <string name="back">返回</string>
+    <string name="no_surrounding_info">暂无周边信息</string>
+    <string name="no_category_info">暂无%s信息</string>
+    <string name="attraction_surrounding">%s - 周边信息</string>
+
+    <!-- 通用 -->
+    <string name="error_attraction_info">景点信息错误</string>
+    <string name="other">其他</string>
+
+    <string name="attraction_detail">景点详情</string>
+    <string name="login">登录</string>
+    <string name="profile">个人资料</string>
+    <string name="user_management">用户管理</string>
+    <string name="content_management">内容管理</string>
+    <string name="user_exists">用户名已存在</string>
+    <string name="user_no_exists">用户名不存在</string>
+    <string name="wrong_passwd">密码错误</string>
+    <string name="clicked_item">点击了：%s</string>
+    <string name="address_prefix">地址：</string>
+    <string name="nearby_places">周边地点</string>
+
+</resources>
