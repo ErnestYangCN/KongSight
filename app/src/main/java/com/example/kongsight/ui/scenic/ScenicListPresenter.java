@@ -29,7 +29,6 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         if (view == null) return;
 
         view.showLoading(true);
-        // 通过同步仓库接口获取所有景点
         List<ContentEntity> list = repository.getAllContents();
         view.showLoading(false);
 
@@ -45,11 +44,14 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         view.showLoading(false);
 
         view.showMessage("已删除景点");
-        loadScenicList(); // 刷新列表
+        loadScenicList();
     }
 
     @Override
-    public void updateScenicTitle(long id, String newTitle) {
+    public void updateScenic(long id,
+                             String newTitle,
+                             String newDescription,
+                             String newImageUrl) {
         if (view == null) return;
 
         if (newTitle == null || newTitle.trim().isEmpty()) {
@@ -58,23 +60,24 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         }
 
         view.showLoading(true);
-        // 只更新 title，其余传 null 表示不改
+
+        // 只改标题 / 描述 / 图片，经纬度保持不变（传 null 表示不更新）
         repository.editContent(
                 id,
                 newTitle,
-                null,   // imageUrl
-                null,   // description
+                newImageUrl,
+                newDescription,
                 null,   // longitude
                 null    // latitude
         );
-        view.showLoading(false);
 
-        view.showMessage("已更新标题");
+        view.showLoading(false);
+        view.showMessage("已更新景点信息");
         loadScenicList();
     }
 
     @Override
-    public void addScenic(String title, String description) {
+    public void addScenic(String title, String description, String imageUrl) {
         if (view == null) return;
 
         if (title == null || title.trim().isEmpty()) {
@@ -83,17 +86,17 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         }
 
         view.showLoading(true);
-        // 用默认值填充图片 / 经纬度 / 创建者
+
         repository.createContent(
                 title,
-                "",         // imageUrl
+                imageUrl != null ? imageUrl : "",
                 description != null ? description : "",
-                0.0,        // longitude
-                0.0,        // latitude
-                1L          // creatorId（随便给一个默认值）
+                0.0,       // longitude 默认
+                0.0,       // latitude 默认
+                1L         // creatorId 默认
         );
-        view.showLoading(false);
 
+        view.showLoading(false);
         view.showMessage("已新增景点");
         loadScenicList();
     }

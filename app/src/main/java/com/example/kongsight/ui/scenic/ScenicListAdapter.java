@@ -29,7 +29,6 @@ public class ScenicListAdapter extends RecyclerView.Adapter<ScenicListAdapter.Vi
         this.listener = listener;
     }
 
-    /** Presenter / Activity 调用，用新的列表替换旧数据 */
     public void submitList(List<ContentEntity> list) {
         items.clear();
         if (list != null) {
@@ -40,7 +39,7 @@ public class ScenicListAdapter extends RecyclerView.Adapter<ScenicListAdapter.Vi
 
     @NonNull
     @Override
-    public ScenicListAdapter.ViewHolder onCreateViewHolder(
+    public ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent,
             int viewType
     ) {
@@ -51,7 +50,7 @@ public class ScenicListAdapter extends RecyclerView.Adapter<ScenicListAdapter.Vi
 
     @Override
     public void onBindViewHolder(
-            @NonNull ScenicListAdapter.ViewHolder holder,
+            @NonNull ViewHolder holder,
             int position
     ) {
         holder.bind(items.get(position));

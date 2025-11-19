@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kongsight.R;
 import com.example.kongsight.database.ContentEntity;
 import com.example.kongsight.model.AppRepositorySync;
-import com.example.kongsight.test.TestDB;
 
 import java.util.List;
 
@@ -32,26 +31,15 @@ public class ScenicListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TestDB.testDB(this);
-        
         setContentView(R.layout.activity_scenic_list);
 
-        // 1. 初始化 Presenter（注入 AppRepositorySync）
         presenter = new ScenicListPresenter(new AppRepositorySync(this));
         presenter.attach(this);
 
-
-        // 2. 找控件
         initViews();
-
-        // 3. 设置 RecyclerView + Adapter
         initRecyclerView();
-
-        // 4. 设置点击事件
         initListeners();
 
-        // 5. 加载景点列表
         presenter.loadScenicList();
     }
 
@@ -81,28 +69,45 @@ public class ScenicListActivity extends AppCompatActivity
         btnAddScenic.setOnClickListener(v -> showAddDialog());
     }
 
-    /** 编辑景点标题的弹窗 */
+    /** 编辑景点：标题 + 描述 + 图片 */
     private void showEditDialog(final ContentEntity scenic) {
-        final EditText editText = new EditText(this);
-        editText.setText(scenic.getTitle());
+        View dialogView = getLayoutInflater()
+                .inflate(R.layout.dialog_add_scenic, null);
+        final EditText etTitle = dialogView.findViewById(R.id.etTitle);
+        final EditText etDescription = dialogView.findViewById(R.id.etDescription);
+        final EditText etImageUrl = dialogView.findViewById(R.id.etImageUrl);
+
+        // 预填旧数据
+        etTitle.setText(scenic.getTitle());
+        etDescription.setText(scenic.getDescription());
+        etImageUrl.setText(scenic.getImageUrl());
 
         new AlertDialog.Builder(this)
-                .setTitle("编辑景点标题")
-                .setView(editText)
+                .setTitle("编辑景点")
+                .setView(dialogView)
                 .setPositiveButton("保存", (dialog, which) -> {
-                    String newTitle = editText.getText().toString();
-                    presenter.updateScenicTitle(scenic.getId(), newTitle);
+                    String newTitle = etTitle.getText().toString();
+                    String newDesc = etDescription.getText().toString();
+                    String newImageUrl = etImageUrl.getText().toString();
+
+                    presenter.updateScenic(
+                            scenic.getId(),
+                            newTitle,
+                            newDesc,
+                            newImageUrl
+                    );
                 })
                 .setNegativeButton("取消", null)
                 .show();
     }
 
-    /** 新增景点的弹窗 */
+    /** 新增景点：标题 + 描述 + 图片 */
     private void showAddDialog() {
         View dialogView = getLayoutInflater()
                 .inflate(R.layout.dialog_add_scenic, null);
         final EditText etTitle = dialogView.findViewById(R.id.etTitle);
         final EditText etDescription = dialogView.findViewById(R.id.etDescription);
+        final EditText etImageUrl = dialogView.findViewById(R.id.etImageUrl);
 
         new AlertDialog.Builder(this)
                 .setTitle("新增景点")
@@ -110,13 +115,15 @@ public class ScenicListActivity extends AppCompatActivity
                 .setPositiveButton("保存", (dialog, which) -> {
                     String title = etTitle.getText().toString();
                     String desc = etDescription.getText().toString();
-                    presenter.addScenic(title, desc);
+                    String imageUrl = etImageUrl.getText().toString();
+
+                    presenter.addScenic(title, desc, imageUrl);
                 })
                 .setNegativeButton("取消", null)
                 .show();
     }
 
-    // --------------- ScenicListContract.View 实现 ---------------
+    // ------------ ScenicListContract.View 实现 ------------
 
     @Override
     public void showLoading(boolean show) {
