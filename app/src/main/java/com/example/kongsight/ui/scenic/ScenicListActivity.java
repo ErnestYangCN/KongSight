@@ -83,9 +83,9 @@ public class ScenicListActivity extends AppCompatActivity
         etImageUrl.setText(scenic.getImageUrl());
 
         new AlertDialog.Builder(this)
-                .setTitle("编辑景点")
+                .setTitle("Edit Scenic")
                 .setView(dialogView)
-                .setPositiveButton("保存", (dialog, which) -> {
+                .setPositiveButton("Save", (dialog, which) -> {
                     String newTitle = etTitle.getText().toString();
                     String newDesc = etDescription.getText().toString();
                     String newImageUrl = etImageUrl.getText().toString();
@@ -97,7 +97,7 @@ public class ScenicListActivity extends AppCompatActivity
                             newImageUrl
                     );
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton("Cancel", null)
                 .show();
     }
 
@@ -110,16 +110,16 @@ public class ScenicListActivity extends AppCompatActivity
         final EditText etImageUrl = dialogView.findViewById(R.id.etImageUrl);
 
         new AlertDialog.Builder(this)
-                .setTitle("新增景点")
+                .setTitle("Add new scenic")
                 .setView(dialogView)
-                .setPositiveButton("保存", (dialog, which) -> {
+                .setPositiveButton("Save", (dialog, which) -> {
                     String title = etTitle.getText().toString();
                     String desc = etDescription.getText().toString();
                     String imageUrl = etImageUrl.getText().toString();
 
                     presenter.addScenic(title, desc, imageUrl);
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton("Cancel", null)
                 .show();
     }
 

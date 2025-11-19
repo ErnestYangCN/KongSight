@@ -43,7 +43,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         repository.deleteContentByID(id);
         view.showLoading(false);
 
-        view.showMessage("已删除景点");
+        view.showMessage("has already delete the senic");
         loadScenicList();
     }
 
@@ -55,7 +55,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         if (view == null) return;
 
         if (newTitle == null || newTitle.trim().isEmpty()) {
-            view.showError("标题不能为空");
+            view.showError("the title can‘t be empty");
             return;
         }
 
@@ -72,7 +72,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         );
 
         view.showLoading(false);
-        view.showMessage("已更新景点信息");
+        view.showMessage("已更新景点信息has updated the new information of scenic");
         loadScenicList();
     }
 
@@ -81,7 +81,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         if (view == null) return;
 
         if (title == null || title.trim().isEmpty()) {
-            view.showError("标题不能为空");
+            view.showError("the title can‘t be empty");
             return;
         }
 
@@ -97,7 +97,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         );
 
         view.showLoading(false);
-        view.showMessage("已新增景点");
+        view.showMessage("has added the scenic");
         loadScenicList();
     }
 }

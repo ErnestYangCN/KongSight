@@ -9,20 +9,20 @@
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="景点标题" />
+        android:hint="the title of scenic" />
 
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="景点描述"
+        android:hint="the description of the scenic"
         android:layout_marginTop="12dp" />
 
     <EditText
         android:id="@+id/etImageUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="图片地址(URL)"
+        android:hint="the address of the picture"
         android:layout_marginTop="12dp" />
 
 </LinearLayout>
