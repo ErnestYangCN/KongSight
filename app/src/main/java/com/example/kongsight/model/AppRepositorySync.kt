@@ -63,12 +63,12 @@ class AppRepositorySync(context: Context) {
     }
 
     /**
-     * 封装资讯方法1 - 新增资讯信息函数，资讯包含的内容项必需齐全
-     * @param title 新建资讯信息题目
-     * @param imageUrl 新建资讯信息图片链接
-     * @param description 新建资讯信息内容
-     * @param longitude 新建资讯信息经度
-     * @param latitude 新建资讯信息纬度
+     * 封装资讯方法1 - 新增景点信息函数，资讯包含的内容项必需齐全
+     * @param title 新建景点信息题目
+     * @param imageUrl 新建景点信息图片链接
+     * @param description 新建景点信息内容
+     * @param longitude 新建景点信息经度
+     * @param latitude 新建景点信息纬度
      * @param creatorId 创建者 ID
      */
     fun createContent(
@@ -77,7 +77,7 @@ class AppRepositorySync(context: Context) {
         description: String,
         longitude: Double,
         latitude: Double,
-        creatorId: Long
+        creatorId: Long,
     ) {
         runBlocking {
             repo.createContent(title, imageUrl, description, longitude, latitude, creatorId)
@@ -85,7 +85,31 @@ class AppRepositorySync(context: Context) {
     }
 
     /**
-     * 封装资讯方法2 - 编辑（更新）资讯信息函数，不需更新的内容可留空（维持原样）
+     * 封装资讯方法2 - 新增周边信息函数，周边包含的内容项必需齐全
+     * @param title 新建周边信息题目
+     * @param imageUrl 新建周边信息图片链接
+     * @param description 新建周边信息内容
+     * @param longitude 新建周边信息经度
+     * @param latitude 新建周边信息纬度
+     * @param creatorId 创建者 ID
+     * @param fatherId 所属景点 ID
+     */
+    fun createSurrounding(
+        title: String,
+        imageUrl: String,
+        description: String,
+        longitude: Double,
+        latitude: Double,
+        creatorId: Long,
+        fatherId: Long?
+    ) {
+        runBlocking {
+            repo.createSurrounding(title, imageUrl, description, longitude, latitude, creatorId, fatherId)
+        }
+    }
+
+    /**
+     * 封装资讯方法3 - 编辑（更新）资讯信息函数，不需更新的内容可留空（维持原样）；无法在景点和周边之间做更改
      * @param id 被编辑的资讯信息 ID，必需
      * @param title 更新资讯信息题目
      * @param imageUrl 更新资讯信息图片链接
@@ -108,7 +132,29 @@ class AppRepositorySync(context: Context) {
     }
 
     /**
-     * 封装资讯方法3 - 根据 ID 删除资讯
+     * 封装资讯方法4 - 根据 ID 判断是景点还是周边
+     * @param contentId 待查寻的信息都 ID
+     * @return Boolean 若是景点返回 true 是周边返回 false
+     */
+    fun checkContentIsSceneOrNot(contentId: Long): Boolean {
+        return runBlocking {
+            repo.checkContentIsSceneOrNot(contentId)
+        }
+    }
+
+    /**
+     * 封装资讯方法 - 5: 根据父景点 ID 查询所有属于这个景点的周边
+     * @param fatherId 父景点（即景点）的 ID
+     * @return Flow<List<ContentEntity>> 返回所有周边列表
+     */
+    fun getSurroundingsByFatherId(fatherId: Long): Flow<List<ContentEntity>> {
+        return runBlocking {
+            repo.getSurroundingsByFatherId(fatherId)
+        }
+    }
+
+    /**
+     * 封装资讯方法6 - 根据 ID 删除资讯
      * @param id 待删除资讯条目的 ID
      */
     fun deleteContentByID(id: Long) {

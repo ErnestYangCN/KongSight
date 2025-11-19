@@ -28,6 +28,13 @@ interface AppDAO {
     @Query("SELECT * FROM content ORDER BY creation_time DESC")
     fun getAllContents(): Flow<List<ContentEntity>>
 
+    @Query("SELECT content_type FROM content WHERE id = :id")
+    fun checkContentIsSceneOrNot(id: Long): Boolean
+
+
+    @Query("SELECT * FROM content WHERE parent_attraction_id = :fatherId")
+    fun getSurroundingsByFatherId(fatherId: Long): Flow<List<ContentEntity>>
+
 
     // User表操作
     @Insert(onConflict = OnConflictStrategy.REPLACE)
