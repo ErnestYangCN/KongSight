@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import com.example.kongsight.test.TestKt;
-import com.example.kongsight.test.TestDB;
+import com.example.kongsight.test.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,5 +23,6 @@ public class MainActivity extends AppCompatActivity {
         });
         // TestKt.updateTextAfterDelay(this); // 这行用来测试 Java + Kt 的兼容
         // TestDB.testDB(this); // 这行用来测试 Java 下的数据库接口是否可用，测试样例来自 test/TestDB，可供接口调用参考
+        TestDBNew.testDB(this);
     }
 }

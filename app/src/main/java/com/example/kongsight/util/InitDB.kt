@@ -58,7 +58,9 @@ class InitDB(private val context: Context) {
                 longitude = 0.0,  // 默认值
                 latitude = 0.0,   // 默认值
                 updateTime = creationTime,
-                creatorId = adminId  // 使用管理员ID
+                creatorId = adminId,  // 使用管理员ID
+                contentTypeIsScene = true,
+                surroundingFatherId = null
             )
             repo.insertContent(initialContent)
         }

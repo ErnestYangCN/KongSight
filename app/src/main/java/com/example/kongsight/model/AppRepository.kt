@@ -26,7 +26,7 @@ class AppRepository(context: Context) {
     fun getAllContents(): Flow<List<ContentEntity>> = dao.getAllContents()
 
     /**
-     * Content Operation 1: 新增资讯信息函数，资讯包含的内容项必需齐全
+     * Content Operation 1: 新增资讯信息函数，资讯包含的内容项必须齐全
      * @param title 新建资讯信息题目
      * @param imageUrl 新建资讯信息图片链接
      * @param description 新建资讯信息内容
@@ -51,13 +51,49 @@ class AppRepository(context: Context) {
             longitude = longitude,
             latitude = latitude,
             updateTime = currentTime,
-            creatorId = creatorId
+            creatorId = creatorId,
+            contentTypeIsScene = true,
+            surroundingFatherId = null
         )
         dao.insertContent(newContent)
     }
 
     /**
-     * Content Operation 2: 编辑（更新）资讯信息函数，更新内容可留空（维持原样）
+     * Content Operation 2: 新增周边信息函数，周边包含的内容项必须齐全
+     * @param title 新建周边信息题目
+     * @param imageUrl 新建周边信息图片链接
+     * @param description 新建周边信息内容
+     * @param longitude 新建周边信息经度
+     * @param latitude 新建周边信息纬度
+     * @param creatorId 创建者 ID
+     */
+    suspend fun createSurrounding(
+        title: String,
+        imageUrl: String,
+        description: String,
+        longitude: Double,
+        latitude: Double,
+        creatorId: Long,
+        fatherID: Long?
+    ) {
+        val currentTime = System.currentTimeMillis()
+        val newContent = ContentEntity(
+            creationTime = currentTime,
+            title = title,
+            imageUrl = imageUrl,
+            description = description,
+            longitude = longitude,
+            latitude = latitude,
+            updateTime = currentTime,
+            creatorId = creatorId,
+            contentTypeIsScene = false,
+            surroundingFatherId = fatherID
+        )
+        dao.insertContent(newContent)
+    }
+
+    /**
+     * Content Operation 3: 编辑（更新）资讯信息函数，更新内容可留空（维持原样）；无法在景点和周边之间做更改
      * @param id 被编辑的资讯信息 ID，必需
      * @param title 更新资讯信息题目
      * @param imageUrl 更新资讯信息图片链接

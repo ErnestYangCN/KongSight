@@ -13,6 +13,11 @@ data class ContentEntity(
     @ColumnInfo(name = "creation_time")
     val creationTime: Long,             // 条目创建时间戳
 
+    @ColumnInfo(name = "content_type")
+    val contentTypeIsScene: Boolean,    // 内容类型是否为景点：True 为景点，False 为周边
+    @ColumnInfo(name = "parent_attraction_id")
+    val surroundingFatherId: Long?,     // 周边的父景点。若为景点，则为 null
+
     val title: String,                  // 标题
 
     @ColumnInfo(name = "image_url")
