@@ -75,7 +75,7 @@ public class ScenicListAdapter extends RecyclerView.Adapter<ScenicListAdapter.Vi
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
-
+//
         void bind(final ContentEntity item) {
             tvTitle.setText(item.getTitle());
             tvDescription.setText(item.getDescription());

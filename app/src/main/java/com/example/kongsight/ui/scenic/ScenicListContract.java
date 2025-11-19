@@ -16,7 +16,7 @@ public interface ScenicListContract {
         void attach(View view);
         void detach();
 
-        /** 查询所有景点 */
+
         void loadScenicList();
 
         /** 删除景点 */

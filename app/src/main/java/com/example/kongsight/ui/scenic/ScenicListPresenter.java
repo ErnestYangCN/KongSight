@@ -34,7 +34,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
 
         view.showScenicList(list);
     }
-
+//
     @Override
     public void deleteScenic(long id) {
         if (view == null) return;
@@ -43,7 +43,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         repository.deleteContentByID(id);
         view.showLoading(false);
 
-        view.showMessage("has already delete the senic");
+        view.showMessage("has already delete the scenic");
         loadScenicList();
     }
 
@@ -72,7 +72,7 @@ public class ScenicListPresenter implements ScenicListContract.Presenter {
         );
 
         view.showLoading(false);
-        view.showMessage("已更新景点信息has updated the new information of scenic");
+        view.showMessage("has updated the new information of scenic");
         loadScenicList();
     }
 

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:hint="the description of the scenic"
         android:layout_marginTop="12dp" />
-
+//
     <EditText
         android:id="@+id/etImageUrl"
         android:layout_width="match_parent"

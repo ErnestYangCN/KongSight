@@ -69,7 +69,7 @@ public class ScenicListActivity extends AppCompatActivity
         btnAddScenic.setOnClickListener(v -> showAddDialog());
     }
 
-    /** 编辑景点：标题 + 描述 + 图片 */
+
     private void showEditDialog(final ContentEntity scenic) {
         View dialogView = getLayoutInflater()
                 .inflate(R.layout.dialog_add_scenic, null);
@@ -101,7 +101,7 @@ public class ScenicListActivity extends AppCompatActivity
                 .show();
     }
 
-    /** 新增景点：标题 + 描述 + 图片 */
+
     private void showAddDialog() {
         View dialogView = getLayoutInflater()
                 .inflate(R.layout.dialog_add_scenic, null);
