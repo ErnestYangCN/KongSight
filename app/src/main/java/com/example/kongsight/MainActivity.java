@@ -23,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         // TestKt.updateTextAfterDelay(this); // 这行用来测试 Java + Kt 的兼容
-        // TestDB.testDB(this); // 这行用来测试 Java 下的数据库接口是否可用，测试样例来自 test/TestDB，可供接口调用参考
+         TestDB.testDB(this); // 这行用来测试 Java 下的数据库接口是否可用，测试样例来自 test/TestDB，可供接口调用参考
     }
 }
