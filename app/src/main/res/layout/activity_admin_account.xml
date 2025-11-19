@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <!-- Title Bar -->
+        <TextView
+            android:id="@+id/titleBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#A9C8E8"
+            android:padding="15dp"
+            android:text="My Account (admin)"
+            android:textSize="24sp"
+            android:textColor="#000000"
+            android:gravity="center"/>
+
+        <!-- Avatar -->
+        <ImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_launcher_foreground" />
+
+        <!-- Username -->
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="User name"
+            android:textSize="18sp"
+            android:textColor="#000000"/>
+
+        <!-- Buttons Wrapper -->
+        <LinearLayout
+            android:id="@+id/buttonsWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
+
+            <!-- Content Edit -->
+            <Button
+                android:id="@+id/btnContentEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Content Edit"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#B5D2F0"/>
+
+            <!-- Edit my profile -->
+            <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit my profile"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#B5D2F0"/>
+
+            <!-- User management -->
+            <Button
+                android:id="@+id/btnUserManagement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User management"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#B5D2F0"/>
+
+            <!-- Log out -->
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log out"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#B5D2F0"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
