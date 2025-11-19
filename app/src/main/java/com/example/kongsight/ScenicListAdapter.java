@@ -1,4 +1,4 @@
-package com.example.kongsight.ui.scenic;
+package com.example.kongsight;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kongsight.R;
 import com.example.kongsight.database.ContentEntity;
 
 import java.util.ArrayList;
