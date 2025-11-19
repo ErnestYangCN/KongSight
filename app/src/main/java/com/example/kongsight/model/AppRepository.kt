@@ -122,7 +122,25 @@ class AppRepository(context: Context) {
     }
 
     /**
-     * Content Operation 3: 根据 ID 删除条目
+     * Content Operation 4: 根据 ID 判断是景点还是周边
+     * @param contentId 待查寻的信息都 ID
+     * @return Boolean 若是景点返回 true 是周边返回 false
+     */
+    fun checkContentIsSceneOrNot(contentId: Long): Boolean {
+        return dao.checkContentIsSceneOrNot(contentId)
+    }
+
+    /**
+     * Content Operation 5: 根据父景点 ID 查询所有属于这个景点的周边
+     * @param fatherId 父景点（即景点）的 ID
+     * @return Flow<List<ContentEntity>> 返回所有周边列表
+     */
+    fun getSurroundingsByFatherId(fatherId: Long): Flow<List<ContentEntity>> {
+        return dao.getSurroundingsByFatherId(fatherId)
+    }
+
+    /**
+     * Content Operation 6: 根据 ID 删除条目
      * @param id 待删除资讯条目的 ID
      */
     suspend fun deleteContentByID(id: Long) {

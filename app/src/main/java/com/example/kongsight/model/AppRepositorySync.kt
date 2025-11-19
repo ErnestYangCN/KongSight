@@ -132,7 +132,29 @@ class AppRepositorySync(context: Context) {
     }
 
     /**
-     * 封装资讯方法3 - 根据 ID 删除资讯
+     * 封装资讯方法4 - 根据 ID 判断是景点还是周边
+     * @param contentId 待查寻的信息都 ID
+     * @return Boolean 若是景点返回 true 是周边返回 false
+     */
+    fun checkContentIsSceneOrNot(contentId: Long): Boolean {
+        return runBlocking {
+            repo.checkContentIsSceneOrNot(contentId)
+        }
+    }
+
+    /**
+     * 封装资讯方法 - 5: 根据父景点 ID 查询所有属于这个景点的周边
+     * @param fatherId 父景点（即景点）的 ID
+     * @return Flow<List<ContentEntity>> 返回所有周边列表
+     */
+    fun getSurroundingsByFatherId(fatherId: Long): Flow<List<ContentEntity>> {
+        return runBlocking {
+            repo.getSurroundingsByFatherId(fatherId)
+        }
+    }
+
+    /**
+     * 封装资讯方法6 - 根据 ID 删除资讯
      * @param id 待删除资讯条目的 ID
      */
     fun deleteContentByID(id: Long) {
