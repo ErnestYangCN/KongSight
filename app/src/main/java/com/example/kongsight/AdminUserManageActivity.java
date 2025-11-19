@@ -1,11 +1,10 @@
-package com.example.kongsight.ui;
+package com.example.kongsight;
 
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.kongsight.R;
 import com.example.kongsight.database.UserEntity;
 import com.example.kongsight.model.AppRepositorySync;
 
