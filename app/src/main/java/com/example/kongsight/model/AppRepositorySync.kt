@@ -139,10 +139,6 @@ class AppRepositorySync(context: Context) {
         runBlocking { repo.deleteContentByID(id) }
     }
 
-
-
-
-
     /* User操作接口 */
     /**
      * 原生用户方法1 - 插入用户信息
@@ -240,5 +236,194 @@ class AppRepositorySync(context: Context) {
      */
     fun getUserAdminStatus(id: Long): Boolean {
         return runBlocking { repo.getUserAdminStatus(id) }
+    }
+
+    /* Nearby POI 操作接口 - 基于ContentEntity扩展 */
+    /**
+     * 获取指定景点的周边地点
+     * @param attractionId 景点ID
+     * @param category 分类：food-美食, transport-交通, entertainment-娱乐 (可选)
+     * @return 周边地点列表
+     */
+    fun getNearbyPois(attractionId: Long, category: String? = null): List<ContentEntity> {
+        return runBlocking {
+            val allContents = repo.getAllContents().firstOrNull() ?: emptyList()
+            allContents.filter { content ->
+                content.description.startsWith("[POI]") && // 是周边地点
+                        content.creatorId == attractionId && // 属于指定景点
+                        (category == null || when(category) {
+                            PoiCategory.FOOD -> content.title.contains("[美食]") || content.title.contains("餐厅") || content.title.contains("小吃") || content.title.contains("美食")
+                            PoiCategory.TRANSPORT -> content.title.contains("[交通]") || content.title.contains("地铁") || content.title.contains("巴士") || content.title.contains("车站") || content.title.contains("交通")
+                            PoiCategory.ENTERTAINMENT -> content.title.contains("[娱乐]") || content.title.contains("购物") || content.title.contains("影院") || content.title.contains("酒吧") || content.title.contains("娱乐")
+                            else -> true
+                        })
+            }
+        }
+    }
+
+    /**
+     * 获取周边地点分类列表
+     * @return 分类列表
+     */
+    fun getPoiCategories(): List<String> {
+        return listOf(PoiCategory.FOOD, PoiCategory.TRANSPORT, PoiCategory.ENTERTAINMENT)
+    }
+
+    /**
+     * 创建周边地点数据
+     * @param attractionId 所属景点ID
+     * @param name 地点名称
+     * @param category 分类
+     * @param address 地址（存储在description中）
+     * @param latitude 纬度
+     * @param longitude 经度
+     * @param imageUrl 图片URL（可选）
+     */
+    @JvmOverloads
+    fun createNearbyPoi(
+        attractionId: Long,
+        name: String,
+        category: String,
+        address: String,
+        latitude: Double,
+        longitude: Double,
+        imageUrl: String? = null
+    ) {
+        val title = when(category) {
+            PoiCategory.FOOD -> "[美食] $name"
+            PoiCategory.TRANSPORT -> "[交通] $name"
+            PoiCategory.ENTERTAINMENT -> "[娱乐] $name"
+            else -> name
+        }
+
+        val description = "[POI] 地址：$address"
+        val finalImageUrl = imageUrl ?: ""
+
+        runBlocking {
+            repo.createContent(
+                title = title,
+                imageUrl = finalImageUrl,
+                description = description,
+                longitude = longitude,
+                latitude = latitude,
+                creatorId = attractionId // 用creatorId存储所属景点ID
+            )
+        }
+    }
+
+    /**
+     * 初始化示例景点数据（用于测试）
+     */
+    fun initSampleAttractionData() {
+        // 先删除可能存在的旧数据（避免重复）
+        val allContents = getAllContents()
+        for (content in allContents) {
+            deleteContentByID(content.id)
+        }
+
+        // 创建真正的景点数据 - ID从1开始
+        createContent(
+            title = "维多利亚港",
+            imageUrl = "",
+            description = "维多利亚港是位于香港岛和九龙半岛之间的海港，世界三大天然良港之一。由于港阔水深，为天然良港，香港亦因而有东方之珠、世界三大夜景之美誉。",
+            longitude = 114.1713,
+            latitude = 22.2945,
+            creatorId = 1  // 创建者ID，不是景点ID
+        )
+
+        createContent(
+            title = "香港迪士尼乐园",
+            imageUrl = "",
+            description = "香港迪士尼乐园位于大屿山，是亚洲第二座迪士尼乐园。乐园包括七大主题区，提供丰富的娱乐设施和表演。",
+            longitude = 114.0410,
+            latitude = 22.3080,
+            creatorId = 1
+        )
+
+        // 然后创建周边地点数据，关联到景点ID 1（维多利亚港）
+        createNearbyPoi(
+            attractionId = 1,  // 关联到维多利亚港
+            name = "星光餐厅",
+            category = PoiCategory.FOOD,
+            address = "尖沙咀海滨长廊",
+            latitude = 22.2945,
+            longitude = 114.1713
+        )
+
+        createNearbyPoi(
+            attractionId = 1,
+            name = "天星小轮码头",
+            category = PoiCategory.TRANSPORT,
+            address = "尖沙咀天星码头",
+            latitude = 22.2937,
+            longitude = 114.1697
+        )
+    }
+}
+
+/**
+ * 周边地点分类常量
+ */
+object PoiCategory {
+    const val FOOD = "food"
+    const val TRANSPORT = "transport"
+    const val ENTERTAINMENT = "entertainment"
+
+    /**
+     * 获取分类的显示名称（支持多语言）
+     * @param category 分类常量
+     * @param context Context用于获取资源
+     * @return 显示名称
+     */
+    @JvmStatic
+    fun getDisplayName(category: String, context: Context? = null): String {
+        // 如果有Context，尝试从资源获取
+        if (context != null) {
+            try {
+                val resourceId = when(category) {
+                    FOOD -> context.resources.getIdentifier("category_food", "string", context.packageName)
+                    TRANSPORT -> context.resources.getIdentifier("category_transport", "string", context.packageName)
+                    ENTERTAINMENT -> context.resources.getIdentifier("category_entertainment", "string", context.packageName)
+                    else -> context.resources.getIdentifier("other", "string", context.packageName)
+                }
+                if (resourceId != 0) {
+                    return context.getString(resourceId)
+                }
+            } catch (e: Exception) {
+                // 如果资源获取失败，使用默认值
+            }
+        }
+
+        // 默认英文显示
+        return when(category) {
+            FOOD -> "Food"
+            TRANSPORT -> "Transport"
+            ENTERTAINMENT -> "Entertainment"
+            else -> "Other"
+        }
+    }
+
+    /**
+     * 获取分类的关键词（用于搜索匹配）
+     * @param category 分类常量
+     * @return 关键词列表
+     */
+    @JvmStatic
+    fun getSearchKeywords(category: String): List<String> {
+        return when(category) {
+            FOOD -> listOf("[美食]", "餐厅", "小吃", "美食", "饭店", "餐馆", "[food]", "restaurant", "cafe")
+            TRANSPORT -> listOf("[交通]", "地铁", "巴士", "车站", "交通", "码头", "轮渡", "[transport]", "subway", "bus")
+            ENTERTAINMENT -> listOf("[娱乐]", "购物", "影院", "酒吧", "娱乐", "商场", "商店", "[entertainment]", "shopping", "cinema")
+            else -> emptyList()
+        }
+    }
+
+    /**
+     * 获取所有分类列表
+     * @return 分类常量列表
+     */
+    @JvmStatic
+    fun getAllCategories(): List<String> {
+        return listOf(FOOD, TRANSPORT, ENTERTAINMENT)
     }
 }

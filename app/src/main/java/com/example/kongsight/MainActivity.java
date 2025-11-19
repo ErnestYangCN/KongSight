@@ -1,5 +1,6 @@
 package com.example.kongsight;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -7,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import com.example.kongsight.test.*;
+import com.example.kongsight.test.TestKt;
+import com.example.kongsight.test.TestDB;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +24,21 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         // TestKt.updateTextAfterDelay(this); // 这行用来测试 Java + Kt 的兼容
-        // TestDB.testDB(this); // 这行用来测试 Java 下的数据库接口是否可用，测试样例来自 test/TestDB，可供接口调用参考
-        TestDBNew.testDB(this);
+        TestDB.testDB(this); // 这行用来测试 Java 下的数据库接口是否可用，测试样例来自 test/TestDB，可供接口调用参考
+
+
+
+        // 测试：跳转到页面4（景点详情页）
+        testAttractionDetailPage();
     }
+
+    private void testAttractionDetailPage() {
+        // 跳转到首页（HomePageActivity - 页面3）
+        Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+        startActivity(intent);
+
+        // 可选：关闭当前登录页面
+        // finish();
+    }
+
 }
