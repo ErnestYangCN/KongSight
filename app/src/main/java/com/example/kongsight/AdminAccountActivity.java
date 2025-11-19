@@ -117,9 +117,9 @@ public class AdminAccountActivity extends AppCompatActivity {
     /**
      * 可选：处理返回按钮点击
      */
-    @Override
+   /* @Override
     public void onBackPressed() {
         // 可以在这里添加返回按钮的特殊处理
         super.onBackPressed();
-    }
+    }*/
 }

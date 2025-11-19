@@ -64,6 +64,22 @@
             android:name=".AdminUserManageActivity"
             android:exported="false"
             android:label="Admin User Manage" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:label="login" />
+        <activity
+            android:name=".AdminAccountActivity"
+            android:exported="false"
+            android:label="adminAccount" />
+        <activity
+            android:name=".UserAccountActivity"
+            android:exported="false"
+            android:label="userAccount" />
+        <activity
+            android:name=".ScenicListActivity"
+            android:exported="false"
+            android:label="sci" />
 
 
     </application>
