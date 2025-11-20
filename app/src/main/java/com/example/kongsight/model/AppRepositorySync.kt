@@ -433,9 +433,9 @@ object PoiCategory {
     @JvmStatic
     fun getSearchKeywords(category: String): List<String> {
         return when(category) {
-            FOOD -> listOf("[美食]", "餐厅", "小吃", "美食", "饭店", "餐馆", "[food]", "restaurant", "cafe")
-            TRANSPORT -> listOf("[交通]", "地铁", "巴士", "车站", "交通", "码头", "轮渡", "[transport]", "subway", "bus")
-            ENTERTAINMENT -> listOf("[娱乐]", "购物", "影院", "酒吧", "娱乐", "商场", "商店", "[entertainment]", "shopping", "cinema")
+            FOOD -> listOf( "[food]")
+            TRANSPORT -> listOf( "[transport]")
+            ENTERTAINMENT -> listOf("[entertainment]")
             else -> emptyList()
         }
     }

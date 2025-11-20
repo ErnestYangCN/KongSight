@@ -53,12 +53,14 @@ public class HomePageActivity extends AppCompatActivity implements ContentAdapte
     private void setupBanner() {
         try {
             // 从数据库获取景点数据作为轮播图
-            List<ContentEntity> contents = repository.getAllContents();
+            List<ContentEntity> allContents = repository.getAllContents();
             List<String> bannerImages = new ArrayList<>();
 
-            if (contents != null && !contents.isEmpty()) {
-                for (ContentEntity content : contents) {
-                    if (content.getImageUrl() != null && !content.getImageUrl().isEmpty()) {
+            if (allContents != null && !allContents.isEmpty()) {
+                for (ContentEntity content : allContents) {
+                    // 只显示景点数据且图片URL不为空
+                    if (content.getContentTypeIsScene() &&
+                            content.getImageUrl() != null && !content.getImageUrl().isEmpty()) {
                         bannerImages.add(content.getImageUrl());
                     }
                 }
@@ -88,11 +90,20 @@ public class HomePageActivity extends AppCompatActivity implements ContentAdapte
     }
 
     private void loadContents() {
-        List<ContentEntity> contents = repository.getAllContents();
-        if (contents.isEmpty()) {
+        List<ContentEntity> allContents = repository.getAllContents();
+        List<ContentEntity> sceneContents = new ArrayList<>();
+
+        // 过滤出景点数据 (contentTypeIsScene 为 true)
+        for (ContentEntity content : allContents) {
+            if (content.getContentTypeIsScene()) { // 或者使用 content.getContentTypeIsScene()，取决于你的实体类方法名
+                sceneContents.add(content);
+            }
+        }
+
+        if (sceneContents.isEmpty()) {
             Toast.makeText(this, "暂无景点信息", Toast.LENGTH_SHORT).show();
         } else {
-            contentAdapter.setContents(contents);
+            contentAdapter.setContents(sceneContents);
         }
     }
 

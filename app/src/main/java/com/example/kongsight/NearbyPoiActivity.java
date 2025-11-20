@@ -23,7 +23,7 @@ public class NearbyPoiActivity extends AppCompatActivity {
     private String attractionName;
     private List<ContentEntity> allPois = new ArrayList<>();
 
-    // 分类选项（替换原来的RadioButton）
+    // 分类选项
     private LinearLayout categoryContainer;
     private TextView categoryFood, categoryTransport, categoryEntertainment;
     private TextView currentSelectedCategory;
@@ -41,10 +41,9 @@ public class NearbyPoiActivity extends AppCompatActivity {
         attractionId = intent.getLongExtra("ATTRACTION_ID", -1);
         attractionName = intent.getStringExtra("ATTRACTION_NAME");
 
-        // 如果没有传递景点ID，使用默认值并创建测试数据
+        // 如果没有传递景点ID，使用默认值
         if (attractionId == -1) {
             attractionId = 1; // 默认景点ID
-            createTestData(); // 创建测试数据
         }
 
         // 初始化UI组件
@@ -55,60 +54,6 @@ public class NearbyPoiActivity extends AppCompatActivity {
 
         // 设置分类切换监听
         setupCategoryListeners();
-    }
-
-    // 添加测试数据方法
-    private void createTestData() {
-        // 创建测试的周边地点数据
-        repository.createNearbyPoi(
-                attractionId,
-                "星光餐厅",
-                PoiCategory.FOOD,
-                "尖沙咀海滨长廊",
-                22.2945,
-                114.1713,
-                "" // 图片URL留空
-        );
-
-        repository.createNearbyPoi(
-                attractionId,
-                "天星小轮码头",
-                PoiCategory.TRANSPORT,
-                "尖沙咀天星码头",
-                22.2937,
-                114.1697,
-                ""
-        );
-
-        repository.createNearbyPoi(
-                attractionId,
-                "海港城购物中心",
-                PoiCategory.ENTERTAINMENT,
-                "尖沙咀广东道3-27号",
-                22.2950,
-                114.1700,
-                ""
-        );
-
-        repository.createNearbyPoi(
-                attractionId,
-                "半岛酒店下午茶",
-                PoiCategory.FOOD,
-                "尖沙咀梳士巴利道22号",
-                22.2940,
-                114.1720,
-                ""
-        );
-
-        repository.createNearbyPoi(
-                attractionId,
-                "尖沙咀地铁站",
-                PoiCategory.TRANSPORT,
-                "尖沙咀弥敦道",
-                22.2975,
-                114.1725,
-                ""
-        );
     }
 
     private void initViews() {
@@ -127,7 +72,7 @@ public class NearbyPoiActivity extends AppCompatActivity {
         adapter = new PoiAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
 
-        // 初始化分类选择器（使用TextView替代RadioButton）
+        // 初始化分类选择器
         categoryContainer = findViewById(R.id.category_container);
         categoryFood = findViewById(R.id.category_food);
         categoryTransport = findViewById(R.id.category_transport);
@@ -149,19 +94,23 @@ public class NearbyPoiActivity extends AppCompatActivity {
     }
 
     private void loadAllPois() {
-        // 获取所有周边地点（不按分类筛选）
-        allPois = repository.getNearbyPois(attractionId, null);
+        // 获取所有内容
+        List<ContentEntity> allContents = repository.getAllContents();
+        allPois.clear();
 
-        // 如果还是没有数据，创建测试数据
-        if (allPois.isEmpty()) {
-            createTestData();
-            allPois = repository.getNearbyPois(attractionId, null);
+        // 过滤出属于当前景点的周边地点
+        for (ContentEntity content : allContents) {
+            // 周边地点的特征：contentTypeIsScene为false，且surroundingFatherId等于当前景点ID
+            if (!content.getContentTypeIsScene() &&
+                    content.getSurroundingFatherId() != null &&
+                    content.getSurroundingFatherId() == attractionId) {
+                allPois.add(content);
+            }
         }
 
         if (allPois.isEmpty()) {
-            Toast.makeText(this, R.string.no_surrounding_info, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "该景点暂无周边信息", Toast.LENGTH_SHORT).show();
         } else {
-            // 显示加载到的数据数量
             Toast.makeText(this, "加载到 " + allPois.size() + " 个周边地点", Toast.LENGTH_SHORT).show();
         }
 
@@ -280,11 +229,11 @@ public class NearbyPoiActivity extends AppCompatActivity {
             }
 
             public void bind(ContentEntity poi) {
-                // 设置名称（去掉分类前缀）
+                // 设置名称（去掉可能的前缀）
                 String name = cleanTitle(poi.getTitle());
                 nameText.setText(name);
 
-                // 设置地址（去掉[POI]前缀）
+                // 设置地址（清理描述）
                 String address = cleanDescription(poi.getDescription());
                 addressText.setText(address);
 
@@ -299,16 +248,21 @@ public class NearbyPoiActivity extends AppCompatActivity {
                 });
             }
 
+            // 在 PoiAdapter 的 ViewHolder 类中修改 cleanTitle 和 cleanDescription 方法
+
             private String cleanTitle(String title) {
                 if (title == null) return "";
 
-                // 移除所有语言的前缀（包括景点可能有的前缀）
+                // 移除所有语言的前缀（包括分类标签）
                 return title.replace("[美食]", "")
                         .replace("[交通]", "")
                         .replace("[娱乐]", "")
                         .replace("[food]", "")
                         .replace("[transport]", "")
                         .replace("[entertainment]", "")
+                        .replace("美食 ", "")  // 额外的清理
+                        .replace("交通 ", "")
+                        .replace("娱乐 ", "")
                         .trim();
             }
 
@@ -319,17 +273,27 @@ public class NearbyPoiActivity extends AppCompatActivity {
                 return description.replace("[POI]", "")
                         .replace("地址：", "")
                         .replace("Address:", "")
+                        .replace("地址:", "")
+                        .replace("[food]", "")
+                        .replace("[transport]", "")
+                        .replace("[entertainment]", "")
                         .trim();
             }
 
             private String detectCategory(String title) {
-                if (title.contains("[美食]") || title.contains("[food]")) {
+                // 根据标题内容检测分类（不依赖前缀）
+                String lowerTitle = title.toLowerCase();
+
+                if (
+                        lowerTitle.contains("[food]") ) {
                     return getString(R.string.category_food);
                 }
-                if (title.contains("[交通]") || title.contains("[transport]")) {
+                if (
+                        lowerTitle.contains("[transport]") ) {
                     return getString(R.string.category_transport);
                 }
-                if (title.contains("[娱乐]") || title.contains("[entertainment]")) {
+                if (
+                        lowerTitle.contains("[entertainment]") ) {
                     return getString(R.string.category_entertainment);
                 }
                 return getString(R.string.other);

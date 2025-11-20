@@ -19,7 +19,7 @@ public class TestDBNew {
 
         try {
             // 1. 删除旧数据库（每次运行都从干净的状态开始）
-            boolean deleted = context.deleteDatabase("kong_sight.db"); // 注意：你的数据库文件名要和 AppDatabase 中一致
+            boolean deleted = context.deleteDatabase("tour_app_database"); // 注意：你的数据库文件名要和 AppDatabase 中一致
             if (deleted) {
                 Log.d(TAG, "旧数据库删除成功");
             } else {
@@ -60,14 +60,19 @@ public class TestDBNew {
 
             // 为埃菲尔铁塔添加两个周边
             repo.createSurrounding(
-                    "塞纳河游船", "https://example.com/seine_cruise.jpg",
+                    "[transport]塞纳河游船", "https://example.com/seine_cruise.jpg",
                     "在塞纳河上乘坐游船，夜晚灯光特别美。",
                     2.2950, 48.8600, userId, eiffelId
             );
             repo.createSurrounding(
-                    "铁塔餐厅 Le Jules Verne", "https://example.com/jules_verne.jpg",
+                    "[food]铁塔餐厅 Le Jules Verne", "https://example.com/jules_verne.jpg",
                     "位于埃菲尔铁塔二层的米其林餐厅。",
                     2.2945, 48.8584, userId, eiffelId
+            );
+            repo.createSurrounding(
+                    "[food]慕田峪缆车", "https://example.com/mutianyu_cable.jpg",
+                    "[food]乘坐缆车上长城，省力又能看风景。",
+                    116.5698, 40.4379, userId, eiffelId
             );
             Log.d(TAG, "埃菲尔铁塔的两个周边已添加");
 
@@ -84,13 +89,13 @@ public class TestDBNew {
             long greatWallId = all.get(all.size() - 1).getId();
 
             repo.createSurrounding(
-                    "慕田峪缆车", "https://example.com/mutianyu_cable.jpg",
-                    "乘坐缆车上长城，省力又能看风景。",
+                    "[food]慕田峪缆车", "https://example.com/mutianyu_cable.jpg",
+                    "[food]乘坐缆车上长城，省力又能看风景。",
                     116.5698, 40.4379, userId, greatWallId
             );
             repo.createSurrounding(
-                    "八达岭野生动物园", "https://example.com/badaling_zoo.jpg",
-                    "距离八达岭长城很近的野生动物园。",
+                    "[food]八达岭野生动物园", "https://example.com/badaling_zoo.jpg",
+                    "[food]距离八达岭长城很近的野生动物园。",
                     116.0069, 40.3632, userId, greatWallId
             );
             Log.d(TAG, "长城的两个周边已添加");
@@ -108,13 +113,13 @@ public class TestDBNew {
             long libertyId = all.get(all.size() - 1).getId();
 
             repo.createSurrounding(
-                    "埃利斯岛移民博物馆", "https://example.com/ellis_island.jpg",
-                    "紧邻自由女神像，记录美国移民历史。",
+                    "[food]埃利斯岛移民博物馆", "https://example.com/ellis_island.jpg",
+                    "[food]紧邻自由女神像，记录美国移民历史。",
                     -74.0396, 40.6995, userId, libertyId
             );
             repo.createSurrounding(
-                    "自由女神渡轮", "https://example.com/liberty_ferry.jpg",
-                    "前往自由女神像必须乘坐的官方渡轮。",
+                    "[food]自由女神渡轮", "https://example.com/liberty_ferry.jpg",
+                    "[food]前往自由女神像必须乘坐的官方渡轮。",
                     -74.0467, 40.7022, userId, libertyId
             );
             Log.d(TAG, "自由女神像的两个周边已添加");
