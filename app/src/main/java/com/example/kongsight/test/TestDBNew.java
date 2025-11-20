@@ -47,10 +47,10 @@ public class TestDBNew {
 
             // ---------- 景点 1：埃菲尔铁塔 ----------
             repo.createContent(
-                    "埃菲尔铁塔",
-                    "https://example.com/eiffel_tower.jpg",
-                    "法国巴黎的标志性建筑，由古斯塔夫·埃菲尔设计建造。",
-                    2.294481, 48.858370, userId
+                    "维多利亚港",
+                    "https://www.discoverhongkong.cn/content/dam/dhk/intl/explore/attractions/best-ways-to-marvel-at-iconic-victoria-harbour/best-ways-to-marvel-at-iconic-victoria-harbour-1920x1080.jpg",
+                    "维多利亚港（英语：Victoria Harbour），简称维港，是位于香港的天然海港，位处香港岛与九龙半岛之间，两岸均为香港中心商业区。由于水深港阔，香港亦因此有“东方之珠”的美誉。",
+                    22.283, 114.150, userId
             );
             Log.d(TAG, "景点添加成功：埃菲尔铁塔");
 

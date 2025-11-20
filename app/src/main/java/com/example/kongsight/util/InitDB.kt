@@ -14,9 +14,9 @@ class InitDB(private val context: Context) {
     private val repo = AppRepository(context)
 
     /**
-     * 初始化管理员账号（如果不存在）。
-     * 用户名: admin, 密码: kongsightadmin, 其他字段留空。
-     * 返回创建或已存在的管理员ID。
+     * 初始化管理员账号
+     * 用户名: admin, 密码: admin123, 其他字段留空
+     * @return 返回创建或已存在的管理员 ID
      */
     suspend fun adminInit(): Long {
         val adminUsername = "admin"
