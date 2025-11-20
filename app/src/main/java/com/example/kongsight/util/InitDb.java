@@ -24,8 +24,8 @@ public class InitDb {
      * 方法 0 - 类构造函数
      * 实例化 InitDB 对象后，方可调用类方法
      ***** e.g.
-     * val init = InitDB(this)
-     * init.deleteDB()
+     * InitDb init = new InitDb(this);
+     * init.deleteDB();
      *****
      * @param context 传入上下文变量
      */
@@ -38,7 +38,7 @@ public class InitDb {
      * 方法 1 - 删除数据库
      */
     public void deleteDB() {
-        boolean deleted = context.deleteDatabase("kong_sight.db");
+        boolean deleted = context.deleteDatabase("tour_app_database");
         if (deleted) {
             Log.d(TAG, "数据库删除成功");
         } else {
@@ -61,7 +61,7 @@ public class InitDb {
             // 使用全参数构造函数创建新管理员
             long registrationTime = System.currentTimeMillis();
             UserEntity newAdmin = new UserEntity(
-                    0, // id，默认将此管理员设为 0
+                    1, // id，默认将此管理员设为 1
                     adminUsername,
                     adminPassword,
                     "", // bio
