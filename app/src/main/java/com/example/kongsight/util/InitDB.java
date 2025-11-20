@@ -178,7 +178,7 @@ public class InitDB {
 
             // 添加周边
             repo.createSurrounding(
-                    "[transportation]港铁香港站", "https://upload.wikimedia.org/wikipedia/commons/2/2d/Hong_Kong_Station_Exterior_202008.jpg",
+                    "[transport]港铁香港站", "https://upload.wikimedia.org/wikipedia/commons/2/2d/Hong_Kong_Station_Exterior_202008.jpg",
                     "距离中环街市最近的地铁站，可乘坐港铁东涌线或机场快线抵达",
                     22.28482694508624, 114.15816143032991, adminId, fatherId3
             );

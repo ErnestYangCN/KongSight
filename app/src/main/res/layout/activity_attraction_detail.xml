@@ -91,7 +91,7 @@
 
             </LinearLayout>
 
-            <!-- 周边按钮 -->
+            <!-- 周边按钮 - 现在在地图前面 -->
             <Button
                 android:id="@+id/nearby_button"
                 android:layout_width="match_parent"
@@ -105,54 +105,55 @@
                 android:layout_marginTop="8dp"
                 android:padding="16dp" />
 
+            <!-- 小地图容器 - 放在按钮后面 -->
+            <LinearLayout
+                android:id="@+id/minimap_container"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical"
+                android:background="@android:color/white"
+                android:layout_margin="16dp"
+                android:layout_marginTop="8dp"
+                android:elevation="2dp">
+
+                <!-- 小地图标题栏 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#F8F8F8"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="位置地图"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
+
+                    <TextView
+                        android:id="@+id/location_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="加载中..."
+                        android:textSize="12sp"
+                        android:textColor="#666666" />
+
+                </LinearLayout>
+
+                <!-- 地图视图 -->
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/minimap_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
-
-    <!-- 小地图容器 - 固定在底部 -->
-    <LinearLayout
-        android:id="@+id/minimap_container"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        android:layout_margin="8dp"
-        android:elevation="4dp">
-
-        <!-- 小地图标题栏 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#F8F8F8"
-            android:padding="12dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="位置地图"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#333333" />
-
-            <TextView
-                android:id="@+id/location_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="加载中..."
-                android:textSize="12sp"
-                android:textColor="#666666" />
-
-        </LinearLayout>
-
-        <!-- 地图视图 -->
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/minimap_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -3,53 +3,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F5F5F5"
+    android:fitsSystemWindows="true">
 
-    <!-- 顶部标题栏 -->
-    <LinearLayout
+    <!-- 顶部标题栏 - 添加与详情页一致的样式和间距 -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:paddingTop="?attr/actionBarSize"
+        android:elevation="4dp">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="香港旅游资讯"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_centerInParent="true" />
 
         <Button
             android:id="@+id/profileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的" />
+            android:text="我的"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="#2196F3" />
+
+    </RelativeLayout>
+
+    <!-- 内容区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 轮播图区域 -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/bannerViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+        <!-- 景点列表标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:text="热门景点"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- 景点列表 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contentRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
-
-    <!-- 轮播图区域 -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/bannerViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp" />
-
-    <!-- 景点列表标题 -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="热门景点"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <!-- 景点列表 -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contentRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
 </LinearLayout>

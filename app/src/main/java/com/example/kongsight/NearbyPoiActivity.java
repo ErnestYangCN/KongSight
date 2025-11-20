@@ -2,7 +2,10 @@ package com.example.kongsight;
 
 import android.content.Intent;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kongsight.model.AppRepositorySync;
 import com.example.kongsight.model.PoiCategory;
 import com.example.kongsight.database.ContentEntity;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -241,6 +248,8 @@ public class NearbyPoiActivity extends AppCompatActivity {
                 String category = detectCategory(poi.getTitle());
                 categoryText.setText(category);
 
+                loadImage(poi.getImageUrl());
+
                 // 点击item的事件
                 itemView.setOnClickListener(v -> {
                     String clickedMessage = getString(R.string.clicked_item, name);
@@ -248,7 +257,48 @@ public class NearbyPoiActivity extends AppCompatActivity {
                 });
             }
 
-            // 在 PoiAdapter 的 ViewHolder 类中修改 cleanTitle 和 cleanDescription 方法
+            private void loadImage(String imageUrl) {
+                if (imageUrl != null && !imageUrl.isEmpty()) {
+                    // 使用简单的网络图片加载
+                    new LoadImageTask(poiImage).execute(imageUrl);
+                } else {
+                    // 如果没有图片URL，设置默认图片
+                    poiImage.setImageResource(R.mipmap.ic_launcher);
+                }
+            }
+
+            // 简单的异步图片加载任务 - 移除了static修饰符
+            private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+                private ImageView imageView;
+
+                public LoadImageTask(ImageView imageView) {
+                    this.imageView = imageView;
+                }
+
+                @Override
+                protected Bitmap doInBackground(String... urls) {
+                    try {
+                        URL url = new URL(urls[0]);
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        connection.setDoInput(true);
+                        connection.connect();
+                        InputStream input = connection.getInputStream();
+                        return BitmapFactory.decodeStream(input);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    if (result != null) {
+                        imageView.setImageBitmap(result);
+                    } else {
+                        imageView.setImageResource(R.mipmap.ic_launcher);
+                    }
+                }
+            }
 
             private String cleanTitle(String title) {
                 if (title == null) return "";
@@ -284,16 +334,13 @@ public class NearbyPoiActivity extends AppCompatActivity {
                 // 根据标题内容检测分类（不依赖前缀）
                 String lowerTitle = title.toLowerCase();
 
-                if (
-                        lowerTitle.contains("[food]") ) {
+                if (lowerTitle.contains("[food]")) {
                     return getString(R.string.category_food);
                 }
-                if (
-                        lowerTitle.contains("[transport]") ) {
+                if (lowerTitle.contains("[transport]")) {
                     return getString(R.string.category_transport);
                 }
-                if (
-                        lowerTitle.contains("[entertainment]") ) {
+                if (lowerTitle.contains("[entertainment]")) {
                     return getString(R.string.category_entertainment);
                 }
                 return getString(R.string.other);
