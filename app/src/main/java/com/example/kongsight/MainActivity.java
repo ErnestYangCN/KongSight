@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         /**
-         * 测试
+         * 测试代码
          */
         // TestKt.updateTextAfterDelay(this); // 这行用来测试 Java + Kt 的兼容
         // TestDB.testDB(this); // 这行用来测试 Java 下的数据库接口是否可用，测试样例来自 test/TestDB，可供接口调用参考
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
          */
         InitDB init = new InitDB(this); // 实例化
         init.deleteDB(); // 删库
-        init.adminInit(); // 内置管理员账号 - ID 为 0
+        init.adminInit(); // 内置管理员账号 - ID 为 1
         init.contentInit(1); // 初始化资讯消息
 
 
