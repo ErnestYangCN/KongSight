@@ -14,7 +14,7 @@ import java.util.List;
  * 初始化类，用于管理 APP 的各种初始化功能。
  * 每个初始化函数独立，便于单独调用或扩展添加更多初始化逻辑。
  */
-public class InitDb {
+public class InitDB {
     private static final String TAG = "InitDB"; // 日志标签
 
     private final Context context;
@@ -29,7 +29,7 @@ public class InitDb {
      *****
      * @param context 传入上下文变量
      */
-    public InitDb(Context context) {
+    public InitDB(Context context) {
         this.context = context;
         this.repo = new AppRepositorySync(context);
     }

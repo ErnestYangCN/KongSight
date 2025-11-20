@@ -5,10 +5,7 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import com.example.kongsight.test.*;
+
 import com.example.kongsight.util.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 初始化数据库：位于 util/initDb.java
          */
-        InitDb init = new InitDb(this); // 实例化
+        InitDB init = new InitDB(this); // 实例化
         init.deleteDB(); // 删库
         init.adminInit(); // 内置管理员账号 - ID 为 0
         init.contentInit(1); // 初始化资讯消息
