@@ -1,4 +1,4 @@
-package com.example.kongsight.ui.scenic;
+package com.example.kongsight;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kongsight.R;
 import com.example.kongsight.database.ContentEntity;
 import com.example.kongsight.model.AppRepositorySync;
 

@@ -18,6 +18,7 @@
     <string name="user_exists">Username already exists</string>
     <string name="user_no_exists">Username does not exist</string>
     <string name="wrong_passwd">Wrong Password!</string>
+    <string name="edit_profile">Edit Profile</string>
 
     <string name="attraction_detail">Attraction Details</string>
     <string name="login">Login</string>

@@ -1,4 +1,4 @@
-package com.example.kongsight.ui.scenic;
+package com.example.kongsight;
 
 import com.example.kongsight.database.ContentEntity;
 import java.util.List;
