@@ -382,7 +382,3 @@ class AppRepositorySync(context: Context) {
         )
     }
 }
-
-/**
- * 周边地点分类常量
- */
